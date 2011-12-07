@@ -86,12 +86,12 @@ public class NotesProvider extends ContentProvider {
 			case Routes.LISTS: {
 				String name = values.getAsString("name");
 				mOpenHelper.createList(name);
-				return NotesContract.buildListUri(name);
+				return NotesContract.Lists.buildListUri(name);
 			}
 			case Routes.LIST: {
 				String name = uri.getPathSegments().get(0);
 				int index = mOpenHelper.getList(name).addNote(values.getAsString("body"));
-				return NotesContract.buildNoteUri(name, index);
+				return NotesContract.Notes.buildNoteUri(name, index);
 			}
 			default: {
 				throw new UnsupportedOperationException("Unknown URI: " + uri);

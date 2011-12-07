@@ -2,6 +2,7 @@ package org.notes.ui;
 
 import org.notes.provider.NotesContract;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,22 +24,28 @@ public class ListsFragment extends ListFragment implements LoaderCallbacks<Curso
 		
         mAdapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1,
                 null, new String[] {
-                    "note"
+                    NotesContract.Lists.NAME
                 }, new int[] {
                     android.R.id.text1
                 }, 0);//CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         setListAdapter(mAdapter);
+        
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		// TODO launch the notes activity
+		Cursor cursor = (Cursor) mAdapter.getItem(position);
+		String name = cursor.getString(cursor.getColumnIndex(NotesContract.Lists.NAME));
+		Uri uri = NotesContract.Lists.buildListUri(name);
+
+		Intent intent = new Intent(Intent.ACTION_VIEW, uri, getActivity().getApplicationContext(), NotesActivity.class);
+		startActivity(intent);
 	}
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		Uri uri = NotesContract.buildListsUri();
-		return new CursorLoader(getActivity().getApplicationContext(), uri, new String[] { "_id", "name" }, null, null, null);
+		Uri uri = NotesContract.Lists.buildListsUri();
+		return new CursorLoader(getActivity().getApplicationContext(), uri, new String[] { NotesContract.Lists._ID, NotesContract.Lists.NAME }, null, null, null);
 	}
 
 	@Override
