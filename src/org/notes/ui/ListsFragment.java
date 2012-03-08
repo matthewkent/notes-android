@@ -21,7 +21,9 @@ public class ListsFragment extends ListFragment implements LoaderCallbacks<Curso
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
+		getLoaderManager().initLoader(0, null, this);
+
         mAdapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1,
                 null, new String[] {
                     NotesContract.Lists.NAME
@@ -29,7 +31,6 @@ public class ListsFragment extends ListFragment implements LoaderCallbacks<Curso
                     android.R.id.text1
                 }, 0);//CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         setListAdapter(mAdapter);
-        
 	}
 
 	@Override

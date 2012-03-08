@@ -15,11 +15,11 @@ public class NotesContract {
 	    public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.notes.list";
 
     	public static Uri buildListsUri() {
-	    	return BASE_CONTENT_URI;
+	    	return CONTENT_URI;
 	    }
 	
 	    public static Uri buildListUri(String name) {
-	        return BASE_CONTENT_URI.buildUpon().appendPath(name).build();
+	        return CONTENT_URI.buildUpon().appendPath(name).build();
 	    }
     }
 
@@ -33,7 +33,7 @@ public class NotesContract {
 	    public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.notes.note";
 
 	    public static Uri buildNoteUri(String listName, int noteIndex) {
-	        return BASE_CONTENT_URI.buildUpon().appendPath(listName).appendPath(String.valueOf(noteIndex)).build();
+	        return CONTENT_URI.buildUpon().appendPath(listName).appendPath(String.valueOf(noteIndex)).build();
 	    }
     }
 

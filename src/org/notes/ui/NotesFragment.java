@@ -26,7 +26,9 @@ public class NotesFragment extends Fragment implements LoaderCallbacks<Cursor> {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
+		getLoaderManager().initLoader(0, null, this);
+
         mAdapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1,
                 null, new String[] {
                     NotesContract.Notes.BODY
@@ -39,7 +41,7 @@ public class NotesFragment extends Fragment implements LoaderCallbacks<Cursor> {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_notes, container, false);
-		ListView list = (ListView) view.findViewById(R.id.notes);
+		ListView list = (ListView) view.findViewById(R.id.notes_list);
 		list.setAdapter(mAdapter);
 		
         view.findViewById(R.id.add_note_button).setOnClickListener(new OnClickListener() {
