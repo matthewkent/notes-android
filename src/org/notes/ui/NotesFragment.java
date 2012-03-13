@@ -4,6 +4,7 @@ import org.notes.R;
 import org.notes.provider.NotesContract;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,8 +15,9 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,10 +49,14 @@ public class NotesFragment extends Fragment implements LoaderCallbacks<Cursor> {
         view.findViewById(R.id.add_note_button).setOnClickListener(new OnClickListener() {
         	@Override
         	public void onClick(View v) {
-        		String body = ((TextView) getView().findViewById(R.id.add_note_content)).getText().toString();
+        		TextView input = (TextView) getView().findViewById(R.id.add_note_content);
+        		String body = input.getText().toString();
         		ContentValues values = new ContentValues();
         		values.put(NotesContract.Notes.BODY, body);
         		getActivity().getContentResolver().insert(getActivity().getIntent().getData(), values);
+        		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        		imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+        		input.setText("");
         	}
         });
 
