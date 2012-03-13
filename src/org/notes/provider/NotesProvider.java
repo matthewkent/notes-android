@@ -59,10 +59,13 @@ public class NotesProvider extends ContentProvider {
 			case Routes.LIST: {
 				Log.i(TAG, "getting list: " + uri);
 				String name = uri.getPathSegments().get(1);
-				List<String> notes = mOpenHelper.getList(name).getNotes();
+				NotesList list = mOpenHelper.getList(name);
 				MatrixCursor cursor = new MatrixCursor(new String[]{NotesContract.Notes._ID, NotesContract.Notes.BODY});
-				for(int i = 0; i < notes.size(); i++) {
-					cursor.addRow(new Object[]{i, notes.get(i)});
+				if(list != null) {
+					List<String> notes = list.getNotes();
+					for(int i = 0; i < notes.size(); i++) {
+						cursor.addRow(new Object[]{i, notes.get(i)});
+					}
 				}
 				cursor.setNotificationUri(getContext().getContentResolver(), uri);
 				return cursor;
@@ -92,6 +95,7 @@ public class NotesProvider extends ContentProvider {
 				String name = values.getAsString(NotesContract.Lists.NAME);
 				Log.i(TAG, "creating list: " + name);
 				mOpenHelper.createList(name);
+				getContext().getContentResolver().notifyChange(uri, null);
 				return NotesContract.Lists.buildListUri(name);
 			}
 			case Routes.LIST: {
@@ -123,6 +127,7 @@ public class NotesProvider extends ContentProvider {
 			case Routes.LIST: {
 				String name = uri.getPathSegments().get(1);
 				mOpenHelper.deleteList(name);
+				getContext().getContentResolver().notifyChange(uri, null);
 				return 1;
 			}
 			case Routes.NOTE: {
