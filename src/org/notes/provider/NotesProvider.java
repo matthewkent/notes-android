@@ -98,7 +98,9 @@ public class NotesProvider extends ContentProvider {
 				String name = uri.getPathSegments().get(1);
 				Log.i(TAG, "adding note to list: " + name);
 				Log.i(TAG, "note body: " + values.getAsString(NotesContract.Notes.BODY));
-				int index = mOpenHelper.getList(name).addNote(values.getAsString(NotesContract.Notes.BODY));
+				NotesList list = mOpenHelper.getList(name);
+				int index = list.addNote(values.getAsString(NotesContract.Notes.BODY));
+				list.save();
 				getContext().getContentResolver().notifyChange(uri, null);
 				return NotesContract.Notes.buildNoteUri(name, index);
 			}
