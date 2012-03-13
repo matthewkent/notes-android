@@ -53,6 +53,7 @@ public class NotesProvider extends ContentProvider {
 				for(int i = 0; i < lists.length; i++) {
 					cursor.addRow(new Object[]{i, lists[i]});
 				}
+				cursor.setNotificationUri(getContext().getContentResolver(), uri);
 				return cursor;
 			}
 			case Routes.LIST: {
@@ -63,6 +64,7 @@ public class NotesProvider extends ContentProvider {
 				for(int i = 0; i < notes.size(); i++) {
 					cursor.addRow(new Object[]{i, notes.get(i)});
 				}
+				cursor.setNotificationUri(getContext().getContentResolver(), uri);
 				return cursor;
 			}
 			default: {
@@ -94,7 +96,10 @@ public class NotesProvider extends ContentProvider {
 			}
 			case Routes.LIST: {
 				String name = uri.getPathSegments().get(1);
+				Log.i(TAG, "adding note to list: " + name);
+				Log.i(TAG, "note body: " + values.getAsString(NotesContract.Notes.BODY));
 				int index = mOpenHelper.getList(name).addNote(values.getAsString(NotesContract.Notes.BODY));
+				getContext().getContentResolver().notifyChange(uri, null);
 				return NotesContract.Notes.buildNoteUri(name, index);
 			}
 			default: {
