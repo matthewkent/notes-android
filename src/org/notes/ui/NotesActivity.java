@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.TableLayout;
 
 public class NotesActivity extends FragmentActivity {
 

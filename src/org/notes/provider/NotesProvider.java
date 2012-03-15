@@ -34,7 +34,7 @@ public class NotesProvider extends ContentProvider {
 
         matcher.addURI(NotesContract.CONTENT_AUTHORITY, NotesContract.Lists.PATH, Routes.LISTS);
         matcher.addURI(NotesContract.CONTENT_AUTHORITY, NotesContract.Lists.PATH + "/*", Routes.LIST);
-        matcher.addURI(NotesContract.CONTENT_AUTHORITY, NotesContract.Notes.PATH + "/%", Routes.NOTE);
+        matcher.addURI(NotesContract.CONTENT_AUTHORITY, NotesContract.Notes.PATH + "/*/#", Routes.NOTE);
         return matcher;
     }
 
@@ -132,8 +132,11 @@ public class NotesProvider extends ContentProvider {
 			}
 			case Routes.NOTE: {
 				String name = uri.getPathSegments().get(1);
-				int noteIndex = Integer.parseInt(uri.getPathSegments().get(1));
-				mOpenHelper.getList(name).deleteNote(noteIndex);
+				int noteIndex = Integer.parseInt(uri.getPathSegments().get(2));
+				NotesList list = mOpenHelper.getList(name);
+				list.deleteNote(noteIndex);
+				list.save();
+				getContext().getContentResolver().notifyChange(NotesContract.Lists.buildListUri(name), null);
 				return 1;
 			}
 			default: {

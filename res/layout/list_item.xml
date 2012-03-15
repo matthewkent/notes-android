@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:stretchColumns="0"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<TableRow>
+		<TextView
+		    android:id="@android:id/text1"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:textAppearance="?android:attr/textAppearanceLarge"
+		    android:gravity="center_vertical"
+		    android:paddingLeft="6dip"
+		    android:minHeight="?android:attr/listPreferredItemHeight"/>
+		<ImageButton
+		    android:id="@+id/delete_note_button"
+		    android:layout_width="wrap_content"
+		    android:layout_height="match_parent"
+		    android:gravity="center_vertical"
+		    android:src="@drawable/list_item_delete"
+		    android:background="#000000"/>
+	</TableRow>
+</TableLayout>

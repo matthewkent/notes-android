@@ -22,21 +22,33 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class NotesFragment extends Fragment implements LoaderCallbacks<Cursor> {
-
 	private SimpleCursorAdapter mAdapter;
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		getLoaderManager().initLoader(0, null, this);
 
-        mAdapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1,
+        mAdapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), R.layout.list_item,
                 null, new String[] {
                     NotesContract.Notes.BODY
                 }, new int[] {
                     android.R.id.text1
-                }, 0);//CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+                }, 0){
+        	public void bindView(View view, Context context, final Cursor cursor) {
+        		final int pos = cursor.getPosition();
+        		view.findViewById(R.id.delete_note_button).setOnClickListener(new OnClickListener() {
+	    			@Override
+	    			public void onClick(View v) {
+	    				String listName = getActivity().getIntent().getData().getLastPathSegment();
+	    				Uri uri = NotesContract.Notes.buildNoteUri(listName, pos);
+	    				getActivity().getContentResolver().delete(uri, null, null);
+	    			}
+	    		});
+        		super.bindView(view, context, cursor);
+        	};
+        };
 	}
 
 	@Override
@@ -59,7 +71,7 @@ public class NotesFragment extends Fragment implements LoaderCallbacks<Cursor> {
         		input.setText("");
         	}
         });
-
+        
 		return view;
 	}
 
