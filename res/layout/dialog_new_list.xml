@@ -1,25 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="3dip"
+    android:paddingLeft="3dip"
+    android:paddingRight="1dip"
+    android:paddingTop="9dip" >
+
+    <LinearLayout
+        android:id="@+id/topPanel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="54dip"
+        android:orientation="vertical" >
 
     <TextView
         android:text="@string/enter_list_name"
+        style="?android:attr/textAppearanceMedium"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
     <EditText
         android:id="@+id/list_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-	<Button
-        android:id="@+id/new_list_create"
-        android:text="@string/create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-	<Button
-        android:id="@+id/new_list_cancel"
-        android:text="@string/cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:minHeight="54dip"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="2dip"
+            android:paddingRight="2dip"
+            android:paddingTop="4dip" >
+
+            <Button
+                android:id="@+id/new_list_create"
+                android:text="@string/create"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:maxLines="2" />
+
+            <Button
+                android:id="@+id/new_list_cancel"
+                android:text="@string/cancel"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:maxLines="2" />
+
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>
